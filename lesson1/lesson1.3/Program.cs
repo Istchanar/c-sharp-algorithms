@@ -8,32 +8,32 @@ namespace lesson1._3
         {
             Console.WriteLine("Проверка числа Фибоначи");
 
-            int[] array = {-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16}; //Скармливаем массив чисел;
+            int[] array = {-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16}; //Скармливаем массив чисел;
 
             
-        // Если на вход попадут минусы, отлавливаем их, т.к. будут лишние нули.
+            // Если на вход попадут минусы, отлавливаем их, т.к. будут лишние нули.
 
             for (int i = 0; i < array.Length; i++)
             {
                 int number = array[i];
 
-                if(number<0)
+                if (number < 0)
+                {
+                    TypeErrorText($"Число меньше единицы, не выводим лишний ноль.");
+                }
+                else 
                 { 
                     int FibReq = FibonacciCicl(number);
 
                     Console.WriteLine($"Число Фибоначчи циклом {FibReq}");
                 }
-                else
-                {
-                    Console.WriteLine($"Число меньше единицы");
-                }
+               
             }
                 
             // Если пойдет число с минусом в рекурсию, получим переполнение, поэтому используем try
 
             for (int i = 0; i < array.Length; i++)
-                {
-
+            {
                 uint number;
 
                 try
@@ -44,9 +44,9 @@ namespace lesson1._3
 
                     Console.WriteLine($"Число Фибоначчи рекурсией {FibReq}");
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    Console.WriteLine(ex);
+                    TypeErrorText("Число меньше единицы, избавляемся от переполнения стека.");
                 }
 
             }
@@ -84,6 +84,15 @@ namespace lesson1._3
 
             return FibonacciReq(numberUint - 1) + FibonacciReq(numberUint - 2);
 
+        }
+
+        static void TypeErrorText(string text)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            Console.WriteLine(text);
+
+            Console.ResetColor();
         }
     }
 }
