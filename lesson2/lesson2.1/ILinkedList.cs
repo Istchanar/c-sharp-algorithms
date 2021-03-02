@@ -1,13 +1,7 @@
-﻿namespace list
-{
-    public class Node
-    {
-        public int Value { get; set; }
-        public Node NextNode { get; set; }
-        public Node PrevNode { get; set; }
-    }
+﻿using NodeBase;
 
-    //Начальную и конечную ноду нужно хранить в самой реализации интерфейса
+namespace List
+{
     public interface ILinkedList
     {
         int GetCount(); // возвращает количество элементов в списке

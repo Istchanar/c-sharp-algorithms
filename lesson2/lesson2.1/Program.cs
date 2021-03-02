@@ -1,7 +1,8 @@
 ﻿using System;
-using list;
+using List;
+using NodeBase;
 
-namespace test
+namespace ListClass
 {
     //Задание №1.1 Требуется реализовать на C# функцию согласно блок-схеме. 
     //Блок-схема описывает алгоритм проверки, простое число или нет. Необходимо также выполнить проверку в коде негативных и позитивных кейсов.
@@ -15,6 +16,10 @@ namespace test
 
             List List = new List();                             // Создаём экземпляр нашего класса;
 
+            Console.WriteLine($"Тестируем метод AddNode:");
+
+            Console.WriteLine();
+
             for (int i = 0; i < array.Length; i++)              // С помощью цикла за полняем значениями наш список;
             {
                 int value = array[i];
@@ -23,8 +28,10 @@ namespace test
 
                 var allNodes = List.FindNode(value);
 
-                Console.WriteLine($"Тестируем метод AddNode: \n {allNodes.Value}");
+                Console.WriteLine($"{allNodes.Value}");
             }
+
+            Console.WriteLine();
 
             int leigth = List.GetCount();                       // Вызываем метод GetCount, выводим в консоль длинну;
 
@@ -32,15 +39,25 @@ namespace test
 
             Console.WriteLine($"Тестируем метод GetCount: GetCount = {leigth}, значение в классе {countFromClass}"); // Проверяем, работает ли GetCount;
 
+            Console.WriteLine();
+
             var newNode = List.FindNode(10);
 
             Console.WriteLine($"Тестируем метод FindNode: {newNode.Value}");
+
+            Console.WriteLine();
 
             List.AddNodeAfter(newNode, 1111);
 
             var addNode = List.FindNode(1111);
 
             Console.WriteLine($"Тестируем метод AddNodeAfter: {addNode.Value}");
+
+            Console.WriteLine();
+
+            // Пока не понял, как тестировать удаления.
+
+            List.RemoveNode(List.FindNode(1111));
 
             List.RemoveNode(Array.IndexOf(array, -1));
 
@@ -66,7 +83,7 @@ namespace test
         public int GetCount()
         {
 
-            var currentNode = head;                     // Берём головной узел;
+            var currentNode = head;                     // Берём головную ноду;
 
             int countNode = 1;                          // Счётчик устанавливаем на единицу;
 
@@ -91,107 +108,101 @@ namespace test
             }
             else
             {
-                tail.NextNode = node;                // Если голова есть, то мы помещаем ссылку следующей ноды хваста на нашу ноду; 
+                tail.NextNode = node;                // Если голова есть, то мы помещаем ссылку следующей от хвоста ноды на нашу ноду; 
 
-                node.PrevNode = tail;                // А наша нода предыдущей ссылкой берёт хвостовую ноду; 
+                node.PrevNode = tail;                // А наша нода предыдущей ссылкой берёт хвостовую ноду;
             }
 
             tail = node;                             // Хвост теперь принимает значение нашей ноды;
 
-            count++;                                 // Увеличиваем на 1 счётчик.
+            count++;                                 // Увеличиваем на один счётчик класс.
         }
 
         // Метод, который добавляет новый элемент списка после определённого элемента.
-        public void AddNodeAfter(Node node, int value)
+        public void AddNodeAfter(Node oldNode, int value)
         {
-            var newNode = new Node { Value = value };   // Создаём новый узел указанного значения;
+            var newNode = new Node { Value = value };       // Создаём новую ноду для указанного значения;
 
-            var nextItem = node.NextNode;               // Получаем ссылку на следующие узел от входной ноды;
+            oldNode.NextNode.PrevNode = newNode;            // Берём у старой ноды ссылку на следующую ноду, у которой пердыдущую ноду меняем на новую;
 
-            node.NextNode = newNode;                    // Предыдущую ноду заставляем ссылаться на нашу;
+            newNode.PrevNode = oldNode;                     // У новой ноды предыдущей ставим старую;
 
-            newNode.NextNode = nextItem;                // А ссылку старой ноды на новую отдаём новой ноде;
+            newNode.NextNode = oldNode.NextNode;            // У новой ноды следующей нодой ставим следующую ноду от старой;
 
-            var prevItem = node;                        // Берём ноду, от которой добавляем, как ссылку на предыдущую;
+            oldNode.NextNode = newNode;                     // Следующую ноду для старой ноды ставим ношу новую.
 
-            node.NextNode.PrevNode = newNode;           // В ноде, на которую ссылается нода, от которой мы добавляем - меняем обратную ссылку на новую ноду;
-
-            newNode.PrevNode = prevItem;                // Установливаем в новую ноду ссылку на предыдущую;
-
-            count++;                                    // Увеличиваем счётчик.
+            count++;                                        // Увеличиваем счётчик класса.
         }
 
-        // Удаляем элемент по индексу;
+        // Удаляем элемент по индексу.
         public void RemoveNode(int index)
         {
 
 
-            if (index == 0)                             
+            if (index == 0)                          //    Если индекс нулевой;
             {
-                var newHead = head.NextNode;           
+                var newHead = head.NextNode;         //    Достаём ноду следующую за головой, которая будет новой головой;
 
-                newHead.PrevNode = null;    
+                newHead.PrevNode = null;             //    Голове ссылку на предыдущую ноду устанавливаем на null;
 
-                head.NextNode = null;
+                head.NextNode = null;                //    Старой голове ссылку на следующую устанавливаем на null;
 
-                head = newHead;
+                head = newHead;                      //    Устанавливаем ноду как голову;
 
-                count--;
+                count--;                             //    Счётчик класса - отнимаем значение.
             }
 
-            else { 
+            else 
+            { 
+                int  number = 0;                     //    В ином случае объявляем переменную число, с нуля;
 
-                int countX = 0;
+                var current = head;                  //    Берём головную ноду;
 
-                var current = head;
-
-                while (current != null)                      
+                while (current != null)              //    Пока ссылка на следующую ноду возвращает не null;      
                 {
-                    if (current.NextNode == null)           
+                    if (current.NextNode == null)    //    Если ссылка null;     
                     {
-                        var newTail = tail.PrevNode;
+                        var newTail = tail.PrevNode; //    Новый хвост это хвост, из ссылки на предыдущую ноду из старого;
 
-                        newTail.NextNode = null;
+                        newTail.NextNode = null;     //    Устанавливаем новому хвосту ссылку на следующую ноду null;
 
-                        tail.PrevNode = null;
+                        tail.PrevNode = null;        //    Старому хвосту на предыдущую null;
 
-                        tail = newTail;
+                        tail = newTail;              //    В поле класса назначаем новый хвост;
 
                         count--;
 
                         break;
                     }
 
-                    if (countX == index - 1)
+                    if (number == index - 1)         //    Если введённое число равно разнице индекса и одного; 
                     {
-                        RemoveNode(current);
-
-                        count--; 
+                        RemoveNode(current);         //    Используя метод удаляем текущую ноду;
 
                         break;
                     }
 
-                    current = current.NextNode;
+                    current = current.NextNode;      //   Если ничего не подходит нам, берём следующую ноду;
 
-                    countX++;
+                    number++;                        //   Число увеличиваем на один.
                 }
             }
 
         }
 
-        // Удаляем указанный узел;
+        // Удаляем указанный узел.
         public void RemoveNode(Node node)
         {
             var current = head;           // Устанавливаем ссылку на голову;
 
-            while (current != null)       // Если голова не равна null;
+            while (current != null)       // Если ссылка не на null;
             {
-                if (current == node)      // Если введенный узел равен ноде - выходим;
+                if (current == node)      // И введенный узел равен нужной ноде - выходим;
                 {
                     break;
                 }
 
-                current = current.NextNode; // Если нет - перебираем;
+                current = current.NextNode; // Если нет - продолжаем перебор;
             }
 
             if (current != null)                                    // Найдя нужную ноду - проверям на null;
@@ -219,22 +230,22 @@ namespace test
 
         }
 
-        // Ищем элемент по значению
+        // Ищем элемент по значению.
         public Node FindNode(int searchValue)
         {
-            var current = head;                  // Устанавливаем старт с головы;
+            var current = head;                    // Устанавливаем старт с головы;
 
-            while (current != null)              // Если голова не null, и там лежит какой-то объект;
+            while (current != null)                // Если голова не null, и там лежит какой-то объект;
             {
                 if (current.Value == searchValue)  // Если текущее значение нам подходит - выйдем из цикла;
                 {
                     return current;
                 }
 
-                current = current.NextNode;       // Если нет - переходим на новый объект;
+                current = current.NextNode;        // Если нет - переходим на новый объект;
             }
 
-            return null;                          // Если всё плохо вернём null.
+            return null;                           // Если всё плохо вернём null.
         }
     }
 }
