@@ -27,6 +27,7 @@ namespace test
 
         {
             int d = 0;
+                
             int i = 2;
 
 
