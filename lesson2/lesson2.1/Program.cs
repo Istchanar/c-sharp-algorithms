@@ -9,22 +9,24 @@ namespace test
     {
         static void Main(string[] args)
         {
-            int[] array = { -1, 3, 10, 56, 77, 999 };      // Проверочный массив интов.
+            //Нужно уносить в отдельный класс.
 
-            List List = new List();                       // Создаём экземпляр нашего класса;
+            int[] array = { -1, 2, 3, 10, 56, 77, 88, 99};      // Проверочный массив интов.
 
-            for (int i = 0; i < array.Length; i++)          // С помощью цикла за полняем значениями наш список;
+            List List = new List();                             // Создаём экземпляр нашего класса;
+
+            for (int i = 0; i < array.Length; i++)              // С помощью цикла за полняем значениями наш список;
             {
                 int value = array[i];
 
-                List.AddNode(value);                      // Используя метод AddNode, проверяем, работает ли FindNode;
+                List.AddNode(value);                            // Используя метод AddNode, проверяем, работает ли FindNode;
 
                 var allNodes = List.FindNode(value);
 
                 Console.WriteLine($"Тестируем метод AddNode: \n {allNodes.Value}");
             }
 
-            int leigth = List.GetCount();                  // Вызываем метод GetCount, выводим в консоль длинну;
+            int leigth = List.GetCount();                       // Вызываем метод GetCount, выводим в консоль длинну;
 
             int countFromClass = List.count;
 
@@ -40,11 +42,13 @@ namespace test
 
             Console.WriteLine($"Тестируем метод AddNodeAfter: {addNode.Value}");
 
-            List.RemoveNode(List.FindNode(-1));
+            List.RemoveNode(Array.IndexOf(array, -1));
 
-            List.RemoveNode(List.FindNode(999));
+            List.RemoveNode(Array.IndexOf(array, 99));
 
-            List.RemoveNode(List.FindNode(10));
+            List.RemoveNode(Array.IndexOf(array, 56));
+
+            Console.ReadLine();
 
         }
 
@@ -62,13 +66,13 @@ namespace test
         public int GetCount()
         {
 
-            var currentNode = head;                 // Берём головной узел;
+            var currentNode = head;                     // Берём головной узел;
 
             int countNode = 1;                          // Счётчик устанавливаем на единицу;
 
-            while (currentNode.NextNode != null)    // Если существует ссылка на следующую ноду;
+            while (currentNode.NextNode != null)        // Если существует ссылка на следующую ноду;
             {
-                currentNode = currentNode.NextNode; // Берём за currentNode следующую ноду и проверяем, есть ли ссылка на следущую и т.д.;
+                currentNode = currentNode.NextNode;     // Берём за currentNode следующую ноду и проверяем, есть ли ссылка на следущую и т.д.;
 
                 countNode++;                            // Счётчик увеличиваем на один;
             }
@@ -121,35 +125,56 @@ namespace test
         public void RemoveNode(int index)
         {
 
-            if (index == 0)                             // Если индекс нулевой
-            {
-                var newHead = head.NextNode;            // То объявляем новой головой то что лежит по ссылке
 
-                head.NextNode = null;                   // В старой голове ссылку правим на нал
+            if (index == 0)                             
+            {
+                var newHead = head.NextNode;           
+
+                newHead.PrevNode = null;    
+
+                head.NextNode = null;
+
+                head = newHead;
+
+                count--;
             }
 
-            var current = head;
+            else { 
 
-            int count = 0;
+                int countX = 0;
 
-            while (current != null)
-            {
-                if (count == index - 1)
+                var current = head;
+
+                while (current != null)                      
                 {
-                    RemoveNode(current);
+                    if (current.NextNode == null)           
+                    {
+                        var newTail = tail.PrevNode;
+
+                        newTail.NextNode = null;
+
+                        tail.PrevNode = null;
+
+                        tail = newTail;
+
+                        count--;
+
+                        break;
+                    }
+
+                    if (countX == index - 1)
+                    {
+                        RemoveNode(current);
+
+                        count--; 
+
+                        break;
+                    }
+
+                    current = current.NextNode;
+
+                    countX++;
                 }
-                if (current.NextNode == null)
-                {
-                    var newTail = tail.PrevNode;
-
-                    tail.PrevNode = null;
-                }
-
-                current.NextNode.PrevNode = current.PrevNode;
-
-                current.PrevNode.NextNode = current.NextNode;
-
-                count++;
             }
 
         }
