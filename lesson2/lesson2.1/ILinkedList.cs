@@ -1,6 +1,6 @@
 ﻿using NodeBase;
 
-namespace List
+namespace LinkList
 {
     public interface ILinkedList
     {
