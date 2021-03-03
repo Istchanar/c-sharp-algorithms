@@ -180,5 +180,42 @@ namespace List
 
             return null;                           // Если всё плохо вернём null.
         }
+
+        public int FindValueByIndex(int index)     // Для тестирования.
+        {
+            var current = head;
+
+            int indexCurrent = 0;
+
+            int value;
+
+            if (index != indexCurrent)
+            {
+                while (indexCurrent != index)
+                {
+                    if (current.NextNode != null)
+                    {
+                        current = current.NextNode;
+                    }
+
+                    else
+                    {
+                        break;
+                    }
+
+                    indexCurrent++;
+                }
+
+                value = current.Value;
+
+                return value;
+            }
+            else
+            {
+                value = current.Value;
+
+                return value;
+            }
+        }
     }
 }
