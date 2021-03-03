@@ -20,6 +20,9 @@ namespace lesson2._2
             Test(testData, inputArray);
 
         }
+
+        // Используем пузырьковую сортировку.
+
         static void BubbleSort(int[] array)
         {
             for (int i = 0; i < array.Length; i++)
@@ -40,30 +43,30 @@ namespace lesson2._2
 
         public static int BinarySearch(int[] inputArray, int searchValue)
         {
-            // Итоговая сложно O(3+3*log2(N)) - итоговая сложность алгоритма, или можно упростить до log2(N).
+            // Итоговая сложность: O(3+3*log2(N)), можно упростить до log2(N).
 
-            int min = 0; // Сложность O(1)
+            int min = 0;                                 // Сложность O(1)
 
-            int max = inputArray.Length - 1;  // O(1)
+            int max = inputArray.Length - 1;             // O(1)
 
             while (min <= max)
             {
-                int mid = (min + max) / 2;             // log2(N)  посколько мы постоянно в два раза уменьшаем кол-во вариантов поиска.
+                int mid = (min + max) / 2;               // log2(N), поскольку мы постоянно в два раза уменьшаем кол-во вариантов поиска, т.е., например, у нас 16 вариантов, потом 8, потом 4, потом 2, потом 1.
 
-                if (searchValue == inputArray[mid])    // O(1)
+                if (searchValue == inputArray[mid])      // O(1)
                 {
                     return mid;
                 }
-                else if (searchValue < inputArray[mid]) // O(1)
+                else if (searchValue < inputArray[mid])  // O(1)
                 {
                     max = mid - 1;
                 }
-                else                                    // O(1) 
+                else                                     // O(1) , в 3х if'ax - els'aх будет выполнено от одной до трёх операций, возмём максимум.
                 {
                     min = mid + 1;
                 }
             }
-            return -1; // O(1)
+            return -1;                                   // O(1)
         }
 
         static void Test(int targetValue, int [] inputArray)
