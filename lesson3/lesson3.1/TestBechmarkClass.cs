@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using BenchmarkDotNet.Attributes;
+using lesson3._1;
 
 namespace lesson3._1
 {
@@ -30,24 +32,38 @@ namespace lesson3._1
             return (x * x) + (y * y);
         }
 
+        //public IEnumerable<int> ValuesForA => new[] { 100, 200 };
+
+        public int [] ValuesForA = {100, 200, 300, 400, 500, 600};
+
+        [ParamsSource(nameof(ValuesForA))]
+
+        public float TestFloat { get; set; }
+
+        [Params(200, 300)]
+
+        public float TestFloat2 { get; set; }
+
+
         [Benchmark]
         public void TestClassFloat()
         {
             PointClassFloat pointOne = new PointClassFloat();
 
-            pointOne.X = 120;
+            pointOne.X = TestFloat;
 
-            pointOne.Y = 120;
+            pointOne.Y = TestFloat;
 
             PointClassFloat pointTwo = new PointClassFloat();
 
-            pointOne.X = 150;
+            pointOne.X = TestFloat2;
 
-            pointOne.Y = 150;
+            pointOne.Y = TestFloat2;
 
             ClassFloat(pointOne, pointTwo);
         }
 
+        /*
         [Benchmark]
         public void TestStructFloat()
         {
@@ -101,5 +117,6 @@ namespace lesson3._1
 
             StructFloatNoSqr(pointOne, pointTwo);
         }
+        */
     }
 }
