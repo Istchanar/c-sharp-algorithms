@@ -4,9 +4,9 @@ using System.Text;
 
 namespace BinaryTree4._2
 {
-    public static class TreeHelper
+    public class TreeHelper
     {
-        public static NodeInfo[] GetTreeInLine(ITree tree)
+        public NodeInfo[] GetTreeInLine(ITree tree)
         {
             var bufer = new Queue<NodeInfo>();
             var returnArray = new List<NodeInfo>();

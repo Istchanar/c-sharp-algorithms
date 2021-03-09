@@ -6,7 +6,7 @@ namespace BinaryTree4._2
     {
         static void Main(string[] args)
         {
-            int[] array = { 1, 6, 3, 2, 15, 7, 55, 56, 18, 9, 12 };
+            int[] array = { 7, 3, 10, 12, 15, 7, 55};
 
             BinaryTree Tree = new BinaryTree();
 
@@ -14,6 +14,8 @@ namespace BinaryTree4._2
             {
                 Tree.AddItem(array[i]);
             }
+
+            Tree.PrintTree();
 
             var Root  = Tree.GetRoot();
             

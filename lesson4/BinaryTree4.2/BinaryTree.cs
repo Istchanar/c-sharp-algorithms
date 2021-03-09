@@ -34,80 +34,48 @@ namespace BinaryTree4._2
 
         public void AddItem(int value) // Добавляем узел;
         {
-            
-
             if (RootNode == null)
             {
                 RootNode = new TreeNode { Value = value };
             }
 
+            var Next = new TreeNode { Value = value };
 
-            else
-            {
-                var current = RootNode;
+            var current = RootNode;
 
-                if (current.Value <= value)
+            while (current != null)
+            { 
+                if (value < current.Value)
                 {
-                    var Next = new TreeNode { Value = value };
-
-                    if (current.LeftChild == null)
+                    if (current.LeftChild != null)
                     {
-                        current.LeftChild = Next;
-
-                        Next.Parent = current;
+                        current = current.LeftChild;
                     }
                     else
                     {
-                        while (current.LeftChild != null)
-                        {
-                            if (current.LeftChild == null)
-                            {
-                                break;
-                            }
-
-                            current = current.LeftChild;
-                        }
-
                         current.LeftChild = Next;
 
-                        Next.Parent = current;
+                        break;
                     }
                 }
-
-
-                else if (current.Value > value)
+                else if (value > current.Value)
                 {
-                    var Next = new TreeNode { Value = value };
-
-                    if (current.RightChild == null)
+                    if (current.RightChild!= null)
                     {
-                        current.RightChild = Next;
-
-                        Next.Parent = current;
+                        current = current.RightChild;
                     }
                     else
                     {
-                        while (current.RightChild != null)
-                        {
-                            if (current.RightChild == null)
-                            {
-                                break;
-                            }
-
-                            current = current.RightChild;
-                        }
-
                         current.RightChild = Next;
 
-                        Next.Parent = current;
+                        break;
                     }
                 }
-            
-            }
+            }   
         }
 
 
-        public void RemoveItem(int value) // удалить узел по значению
+        public void RemoveItem(int value) // Удалить узел по значению;
         {
 
         }
@@ -118,9 +86,20 @@ namespace BinaryTree4._2
 
             return x;
         }
-        public void PrintTree() //вывести дерево в консоль
-        {
 
+        public void PrintTree()
+        {
+            PrintTree1(RootNode);
         }
+
+        public void PrintTree1(TreeNode RootNode) //вывести дерево в консоль
+        {
+                if (RootNode == null) return;
+                    PrintTree1(RootNode.LeftChild);
+                Console.WriteLine(RootNode.Value);
+                    PrintTree1(RootNode.RightChild);
+        }
+
+       
 }   }
 
