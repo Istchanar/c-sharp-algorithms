@@ -10,18 +10,36 @@ namespace BinaryTree4._2
         public TreeNode LeftChild { get; set; }
         public TreeNode RightChild { get; set; }
         public TreeNode Parent { get; set; }
-
-        /*
-        public override bool Equals(object obj)
+        public void Print(string symbol, bool last)
         {
-            var node = obj as TreeNode;
+            Console.Write(symbol);
 
-            if (node == null)
-                return false;
+            if (last)
+            {
+                Console.Write("└─");
+                symbol += "  ";
+            }
 
-            return node.Value == Value;
+            else
+            {
+                Console.Write("├─");
+                symbol += "| ";
+            }
+
+            Console.WriteLine(Value);
+
+            var child = new List<TreeNode>();
+
+            if (this.LeftChild != null)
+                child.Add(this.LeftChild);
+
+            if (this.RightChild != null)
+                child.Add(this.RightChild);
+
+            for (int i = 0; i < child.Count; i++)
+                child[i].Print(symbol, i == child.Count - 1);
+
         }
-        */
     }
 
 }
