@@ -7,7 +7,6 @@ namespace BinaryTree4._2
     public class BinaryTree : ITree
     {
         public TreeNode RootNode { get; set; }
-
         public int count { get; set; }
 
 
@@ -198,10 +197,7 @@ namespace BinaryTree4._2
 
                     deleteNode.RightChild = null;
                 }
-
             }
-
-
             count--;
         }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BinaryTree4._2
 {
@@ -31,13 +30,19 @@ namespace BinaryTree4._2
             var child = new List<TreeNode>();
 
             if (this.LeftChild != null)
+            {
                 child.Add(this.LeftChild);
+            }
 
             if (this.RightChild != null)
+            {
                 child.Add(this.RightChild);
+            }
 
             for (int i = 0; i < child.Count; i++)
+            {
                 child[i].Print(symbol, i == child.Count - 1);
+            }
 
         }
     }
