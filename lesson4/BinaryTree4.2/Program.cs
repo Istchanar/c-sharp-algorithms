@@ -7,9 +7,7 @@ namespace BinaryTree4._2
     {
         static void Main(string[] args)
         {
-            int[] array = {10, 9, 11, 8, 10, 7, 6, 5, 15, 19, 14};
-
-            //int[] array = { 10, 100, 1, 4, 50, 0, 19, 45, 14 };
+            int[] array = {10, 9, 11, 8, 10, 7, 6, 5, 15, 19, 14, 17, 20};
 
             BinaryTree Tree = new BinaryTree();
 

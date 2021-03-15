@@ -44,7 +44,7 @@ namespace BinaryTree4._2
 
             while (current != null)
             {
-                if (value < current.Value)
+                if (value > current.Value)
                 {
                     if (current.LeftChild != null)
                     {
@@ -59,7 +59,7 @@ namespace BinaryTree4._2
                         break;
                     }
                 }
-                else if (value > current.Value)
+                else if (value < current.Value)
                 {
                     if (current.RightChild != null)
                     {
@@ -87,119 +87,124 @@ namespace BinaryTree4._2
         }
 
 
-        public void RemoveItem(int value) // Удалить узел по значению; НУЖЕН ФИКС УДАЛЕНИЯ, ПОКА СТРАННО УДАЛЯЕТ И ЛЕВЫЙ ЭЛЕМЕНТ ТЕРЯЕТСЯ
+        public void RemoveItem(int value) // Удалить узел по значению;
         {
             var deleteNode = GetNodeByValue(value);
 
-            if (deleteNode.LeftChild == null && deleteNode.RightChild == null)
+            if (deleteNode.RightChild == null)
             {
-                var Parent = deleteNode.Parent;
-
-                if (Parent.RightChild != null)
+                if (deleteNode.LeftChild != null)
                 {
-                    Parent.RightChild = null;
+                    var LeftNode = deleteNode.LeftChild;
+
+                    ParetnCalc(deleteNode, LeftNode);
+
+                    deleteNode.LeftChild.Parent = deleteNode.Parent;
+
+                    deleteNode.LeftChild = null;
+                    deleteNode.Parent = null;
                 }
-                else if (Parent.LeftChild != null)
+                else if (deleteNode.LeftChild == null)
                 {
-                    Parent.LeftChild = null;
+                    TreeNode nullValue = null;
+
+                    ParetnCalc(deleteNode, nullValue);
+
+                    deleteNode.Parent = null;
                 }
-
-                deleteNode.Parent = null;
-
             }
-            else if (deleteNode.LeftChild != null && deleteNode.RightChild == null)
+            else if (deleteNode.RightChild.LeftChild == null)
             {
-                var Parent = deleteNode.Parent;
-
-                deleteNode.LeftChild.Parent = Parent;
-
-                if (Parent.RightChild != null)
+                if (deleteNode.LeftChild != null)
                 {
-                    Parent.RightChild = deleteNode.LeftChild;
-                }
-                else if (Parent.LeftChild != null)
-                {
-                    Parent.LeftChild = deleteNode.LeftChild;
-                }
+                    var RightNode = deleteNode.RightChild;
 
-                deleteNode.Parent = null;
-
-                deleteNode.LeftChild = null;
-            }
-            else if (deleteNode.LeftChild == null && deleteNode.RightChild != null)
-            {
-                var Parent = deleteNode.Parent;
-
-                deleteNode.RightChild.Parent = Parent;
-
-                if (Parent.RightChild != null)
-                {
-                    Parent.RightChild = deleteNode.RightChild;
-                }
-                else if (Parent.LeftChild != null)
-                {
-                    Parent.LeftChild = deleteNode.RightChild;
-                }
-
-                deleteNode.Parent = null;
-
-                deleteNode.RightChild = null;
-            }
-            else if (deleteNode.LeftChild != null && deleteNode.RightChild != null)
-            {
-                if (deleteNode.RightChild.RightChild == null && deleteNode.RightChild.LeftChild == null)
-                {
-                    var Parent = deleteNode.Parent;
-
-                    deleteNode.RightChild.Parent = Parent;
+                    ParetnCalc(deleteNode, RightNode);
 
                     deleteNode.LeftChild.Parent = deleteNode.RightChild;
-
-                    if (Parent.RightChild!=null)
-                    {
-                        Parent.RightChild = deleteNode.RightChild;
-                    }
-                    else if (Parent.LeftChild!=null)
-                    {
-                        Parent.LeftChild = deleteNode.RightChild;
-                    }
-
-                    deleteNode.Parent = null;
+                    deleteNode.RightChild.LeftChild = deleteNode.LeftChild;
+                    deleteNode.RightChild.Parent = deleteNode.Parent;
 
                     deleteNode.LeftChild = null;
-
                     deleteNode.RightChild = null;
+                    deleteNode.Parent = null;
                 }
-                else if (deleteNode.RightChild.LeftChild != null)
+                else if (deleteNode.LeftChild == null)
                 {
-                    var Parent = deleteNode.Parent;
+                    var RightNode = deleteNode.RightChild;
 
-                    deleteNode.RightChild.LeftChild.Parent = Parent;
+                    ParetnCalc(deleteNode, RightNode);
 
-                    deleteNode.LeftChild.Parent = deleteNode.RightChild.LeftChild;
-
-                    deleteNode.RightChild.LeftChild.RightChild = deleteNode.RightChild;
-
-                    deleteNode.RightChild.LeftChild.LeftChild = deleteNode.LeftChild;
-
-                    if (Parent.RightChild!=null)
-                    {
-                        Parent.RightChild = deleteNode.RightChild.LeftChild;
-                    }
-                    else if (Parent.LeftChild!=null)
-                    {
-                        Parent.LeftChild = deleteNode.RightChild.LeftChild;
-                    }
-
-                    deleteNode.Parent = null;
-
-                    deleteNode.LeftChild = null;
+                    RightNode.Parent = deleteNode.Parent;
 
                     deleteNode.RightChild = null;
+                    deleteNode.Parent = null;
+                }
+            }
+            else if (deleteNode.RightChild.LeftChild != null)
+            {
+                if (deleteNode.LeftChild != null)
+                {
+
+                    var RightLeftNode = deleteNode.RightChild.LeftChild;
+
+                    deleteNode.LeftChild.Parent = RightLeftNode;
+
+                    RightLeftNode.LeftChild = deleteNode.LeftChild;
+                    RightLeftNode.Parent = deleteNode.Parent;
+                    RightLeftNode.RightChild = deleteNode.RightChild;
+
+                    ParetnCalc(deleteNode, RightLeftNode);
+
+                    deleteNode.RightChild.Parent = RightLeftNode;
+                    deleteNode.RightChild.LeftChild = null;
+
+                    deleteNode.LeftChild = null;
+                    deleteNode.RightChild = null;
+                    deleteNode.Parent = null;
+                }
+                else if (deleteNode.LeftChild == null)
+                {
+                    var RightLeftNode = deleteNode.RightChild.LeftChild;
+
+                    RightLeftNode.Parent = deleteNode.Parent;
+                    RightLeftNode.RightChild = deleteNode.RightChild;
+
+                    ParetnCalc(deleteNode, RightLeftNode);
+
+                    deleteNode.RightChild.Parent = RightLeftNode;
+                    deleteNode.RightChild.LeftChild = null;
+
+                    deleteNode.RightChild = null;
+                    deleteNode.Parent = null;
                 }
             }
             count--;
         }
+
+        public void ParetnCalc(TreeNode deleteNode, TreeNode value)
+        {
+            if (deleteNode.Parent.RightChild != null && deleteNode.Parent.LeftChild != null)
+            {
+                if (deleteNode.Parent.RightChild.Value > deleteNode.Value)
+                {
+                    deleteNode.Parent.LeftChild = value;
+                }
+                if (deleteNode.Parent.RightChild.Value < deleteNode.Value)
+                {
+                    deleteNode.Parent.RightChild = value;
+                }
+            }
+            else if (deleteNode.Parent.RightChild != null && deleteNode.Parent.LeftChild == null)
+            {
+                deleteNode.Parent.RightChild = value;
+            }
+            else if (deleteNode.Parent.RightChild == null && deleteNode.Parent.LeftChild != null)
+            {
+                deleteNode.Parent.LeftChild = value;
+            }
+        }
+            
 
         public TreeNode GetNodeByValue(int value) //Получить узел дерева по значению;
         {
@@ -212,7 +217,7 @@ namespace BinaryTree4._2
 
             while (current != null)
             {
-                if (value < current.Value)
+                if (value > current.Value)
                 {
                     if (current.Value != value)
                     {
@@ -224,7 +229,7 @@ namespace BinaryTree4._2
                     }
 
                 }
-                else if (value > current.Value)
+                else if (value < current.Value)
                 {
                     if (current.Value != value)
                     {

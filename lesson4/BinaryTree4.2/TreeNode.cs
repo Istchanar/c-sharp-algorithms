@@ -46,5 +46,4 @@ namespace BinaryTree4._2
 
         }
     }
-
 }
