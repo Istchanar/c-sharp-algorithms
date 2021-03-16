@@ -10,17 +10,21 @@ namespace graph
         public void SearchDeep()
         {
            
-            int height1 = 0; int height2 = 0;
+            int height1 = 0; 
+            
+            int height2 = 0;
 
-            List<int> nodeDFS = new List<int>();  
+            List<int> node = new List<int>();  
 
-            nodeDFS.Add(0);
+            node.Add(0);
 
             int[,] assist = (int[,])tree.Clone();
-            int var = 0;
+
+            int zero = 0;
+
             int a, b;
 
-            for (a = var; a < assist.GetLength(0); a++) 
+            for (a = zero; a < assist.GetLength(0); a++) 
             {
                 if (height2 < height1)
                 {
@@ -33,28 +37,28 @@ namespace graph
                     if (assist[a, b] == 1)
                     {
                         height1++;
-                        nodeDFS.Add(b);
+                        node.Add(b);
                         assist[a, b] = 0;
-                        var = b;
+                        zero = b;
                         break;
                     }
 
                     else
                     if (a != 0)
                     {
-                        var = 0;
+                        zero = 0;
 
                     }
                 }
             }
-            Console.WriteLine("Выведем список вершин при обходе дерева в глубину:");
+            Console.WriteLine("DFS список вершин графа:");
 
-            for (int i = 0; i < nodeDFS.Count; i++)
+            for (int i = 0; i < node.Count; i++)
             {
-                Console.WriteLine("\t" + nodeDFS[i]);
+                Console.Write(node[i] + " ");
             }
 
-            Console.WriteLine("Высота дерева:" + height2);
+            Console.WriteLine("Глубина графа:" + height2);
 
         }
     }
