@@ -17,6 +17,8 @@ namespace graph
 
             graph.SearchDeep();
 
+            graph.SearchDeep1();
+
             Console.WriteLine();
         }
     }
