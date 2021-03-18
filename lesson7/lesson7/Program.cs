@@ -39,19 +39,23 @@ namespace lesson7
 
         static void Print(int n, int m, int[,] a)
         {
+
             int i, j;
 
             for (i = 0; i < n; i++)
             {
                 for (j = 0; j < m; j++)
                 {
-                    string line = Line(a[i,j]);
+                    string line = Line(a[i, j]);
 
-                    Console.Write(a[i, j]+ line);
+                    Console.Write(a[i, j] + line);
                 }
 
                 Console.Write("\r\n");
             }
+                    
+            Console.Write("\r\nВозможностей перехода в точку " + n + " равно "+ a[n-1, m-1]);
+               
         }
 
         static string Line(int arrayValue)
