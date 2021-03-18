@@ -4,25 +4,32 @@ namespace lesson7
 {
     class Program
     {
-        const int N = 8;
-        const int M = 8;
+        const int size = 8;
         static void Main(string[] args)
         {
-            int[,] A = new int[N, M];
+            Desk desk = new Desk();
+
+            desk.SetSize(size);
+
+            int N = desk.Height;
+
+            int M = desk.Width;
+
+            int[,] A = new int[N, M];  // Наша доска;
 
             int i, j;
 
             for (j = 0; j < M; j++)
             {
-                A[0, j] = 1;           //Первая строка заполнена единицами;
+                A[0, j] = 1;           //Первая строка заполнена единицами, т.к. пройти по первую строчку возможно только вправо (попасть в след. ячейку только из одной);
             }
             for (i = 1; i < N; i++)
             {
-                A[i, 0] = 1;
+                A[i, 0] = 1;            // Первый столбец заполнен единицами, т.к. пройти по первому столбику возможно только вниз (попасть в след. ячейку только из одной);
 
                 for (j = 1; j < M; j++)
                 {
-                    A[i, j] = A[i, j - 1] + A[i - 1, j];
+                    A[i, j] = A[i, j - 1] + A[i - 1, j]; // В точку i, j можно попасть из i, j-1 и из i-1,j элементов, т.е. сверху или слева.
                 }
             }
 
@@ -39,8 +46,10 @@ namespace lesson7
                 for (j = 0; j < m; j++)
                 {
                     string line = Line(a[i,j]);
+
                     Console.Write(a[i, j]+ line);
                 }
+
                 Console.Write("\r\n");
             }
         }
@@ -48,7 +57,6 @@ namespace lesson7
         static string Line(int arrayValue)
         {
             string line;
-
             if (arrayValue >= 1000)
             {
                return line = "  ";
