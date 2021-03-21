@@ -17,10 +17,9 @@ namespace graph
 
             Graff graph = new Graff { graphMatrix = graphMatrix};
 
-            graph.SetSize(graphMatrix.GetLength(0));
+            graph.DFSSetSize(graphMatrix.GetLength(0));
             Console.WriteLine("Вывод шагов DFSearch алгоритма:");
             graph.DFSearch(0);
-            Console.WriteLine();
             graph.DFSPrint();
 
             graph.BFSearch(graphMatrix);

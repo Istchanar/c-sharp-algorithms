@@ -6,11 +6,8 @@ namespace graph
     class Graff
     {
         public int[,] graphMatrix; // Матрица смежности;
-
         public bool[] visited;
-
         private List<int> DFSvertex = new List<int>();
-
         public void DFSearch(int v)
         {
             visited[v] = true;
@@ -24,7 +21,7 @@ namespace graph
                 }
             }
         }
-        public void SetSize(int n) // Установить размер массива в поле как длинну graphMatrix; 
+        public void DFSSetSize(int n) // Установить размер массива в поле как длинну graphMatrix; 
         {
             visited = new bool[n];
         }
@@ -39,6 +36,7 @@ namespace graph
         }
         public void DFSPrint() // Отрисовываем лист;
         {
+            Console.WriteLine();
             Console.WriteLine("\nDFS список вершин графа:");
             foreach (int step in DFSvertex)
             {
@@ -49,10 +47,10 @@ namespace graph
         public void BFSearch(int[,] graphMatrix)
         {
             Queue<int> vertex = new Queue<int>();   // Создаём очередь;
-            vertex.Enqueue(0);  // Добавляем в очередь граф со значением 0;
+            vertex.Enqueue(0);                      // Добавляем в очередь граф со значением 0;
             bool[ ] visited = new bool[graphMatrix.GetLength(0)]; //Создаём массив равный одному из измерений массива-графа, для хранения состояния вершины графа;
-            visited[0] = true; // Для нуля сразу устанавливаем тру, т.е. мы его посетили;
-            int i = 0;  //Счётчик нумерации волн;
+            visited[0] = true;                      // Для нуля сразу устанавливаем тру, т.е. мы его посетили;
+            int i = 0;                              //Счётчик нумерации волн;
             List<int> graphValues = new List<int>();
             graphValues.Add(0);
             Console.WriteLine("Вывод волн BFSearch алгоритма:");
@@ -86,7 +84,6 @@ namespace graph
                 Console.Write(graphVal+" ");
             }
         }
-
         /*
         public void DFSearch1()
         {
@@ -97,7 +94,6 @@ namespace graph
             int[,] assist = (int[,])graphMatrix.Clone();
             int zero = 0;
             int a, b;
-
             for (a = zero; a < assist.GetLength(0); a++)
             {
                 if (height2 < height1)
