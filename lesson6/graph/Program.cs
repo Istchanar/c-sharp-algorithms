@@ -5,17 +5,24 @@ namespace graph
     class Program
     {
         static void Main(string[] args)
-        {                                  //0 1 2 3 4 5
-            int[,] graphMatrix = new int[6, 6]   {{0,1,0,0,1,0},
+        {                                  
+            int[,] graphMatrix = new int[6,6]{
+                                                  {0,1,0,0,1,0},
                                                   {1,0,1,0,0,1},
                                                   {0,1,0,1,0,1},
                                                   {0,0,1,0,1,0},
                                                   {1,0,0,1,0,1},
-                                                  {0,1,1,0,1,0}};
+                                                  {0,1,1,0,1,0}
+                                             };
 
-            Graff graph = new Graff { graphMatrix = graphMatrix };
-            graph.DFSearch();
+            Graff graph = new Graff { graphMatrix = graphMatrix};
+
+            graph.SetSize(graphMatrix.GetLength(0));
+            Console.WriteLine("Вывод шагов DFSearch алгоритма:");
+            graph.DFSearch(0);
             Console.WriteLine();
+            graph.DFSPrint();
+
             graph.BFSearch(graphMatrix);
             Console.ReadLine();
         }
